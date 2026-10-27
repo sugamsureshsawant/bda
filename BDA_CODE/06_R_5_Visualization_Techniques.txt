@@ -1,0 +1,40 @@
+R PROGRAM: 5 VISUALIZATION TECHNIQUES
+
+# Install packages if required:
+# install.packages("ggplot2")
+
+library(ggplot2)
+
+# Sample data
+data <- data.frame(
+  Student = c("A", "B", "C", "D", "E"),
+  Marks = c(78, 85, 67, 92, 74),
+  Attendance = c(85, 90, 75, 95, 80),
+  StudyHours = c(4, 5, 3, 6, 4)
+)
+
+# 1. BAR CHART
+ggplot(data, aes(x = Student, y = Marks)) +
+  geom_col() +
+  labs(title = "Student Marks", x = "Student", y = "Marks")
+
+# 2. LINE CHART
+ggplot(data, aes(x = Student, y = Marks, group = 1)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Marks Trend", x = "Student", y = "Marks")
+
+# 3. SCATTER PLOT
+ggplot(data, aes(x = StudyHours, y = Marks)) +
+  geom_point(size = 3) +
+  labs(title = "Study Hours vs Marks", x = "Study Hours", y = "Marks")
+
+# 4. HISTOGRAM
+ggplot(data, aes(x = Marks)) +
+  geom_histogram(binwidth = 10) +
+  labs(title = "Distribution of Marks", x = "Marks", y = "Frequency")
+
+# 5. BOX PLOT
+ggplot(data, aes(y = Marks)) +
+  geom_boxplot() +
+  labs(title = "Box Plot of Marks", y = "Marks")

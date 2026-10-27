@@ -1,0 +1,93 @@
+R PROGRAM: LINEAR, LOGISTIC AND MULTIPLE REGRESSION
+
+# Sample data
+data <- data.frame(
+  StudyHours = c(1, 2, 3, 4, 5, 6, 7, 8),
+  Attendance = c(60, 65, 70, 72, 78, 82, 88, 92),
+  Marks = c(45, 50, 55, 60, 65, 72, 80, 88),
+  Pass = c(0, 0, 0, 1, 1, 1, 1, 1)
+)
+
+# --------------------------------------------------
+# 1. LINEAR REGRESSION
+# --------------------------------------------------
+linear_model <- lm(Marks ~ StudyHours, data = data)
+
+print(summary(linear_model))
+
+# Prediction
+new_data <- data.frame(StudyHours = c(4.5, 7.5))
+print(predict(linear_model, newdata = new_data))
+
+# Plot
+plot(
+  data$StudyHours,
+  data$Marks,
+  main = "Linear Regression",
+  xlab = "Study Hours",
+  ylab = "Marks",
+  pch = 19
+)
+abline(linear_model)
+
+# --------------------------------------------------
+# 2. LOGISTIC REGRESSION
+# --------------------------------------------------
+logistic_model <- glm(
+  Pass ~ StudyHours,
+  data = data,
+  family = binomial
+)
+
+print(summary(logistic_model))
+
+# Probability prediction
+probability <- predict(
+  logistic_model,
+  newdata = data.frame(StudyHours = c(3, 6)),
+  type = "response"
+)
+
+print(probability)
+
+# Plot logistic probabilities
+plot(
+  data$StudyHours,
+  data$Pass,
+  main = "Logistic Regression",
+  xlab = "Study Hours",
+  ylab = "Pass (0/1)",
+  pch = 19
+)
+
+# --------------------------------------------------
+# 3. MULTIPLE LINEAR REGRESSION
+# --------------------------------------------------
+multiple_model <- lm(
+  Marks ~ StudyHours + Attendance,
+  data = data
+)
+
+print(summary(multiple_model))
+
+# Prediction
+new_student <- data.frame(
+  StudyHours = 6,
+  Attendance = 85
+)
+
+print(predict(multiple_model, newdata = new_student))
+
+# Plot actual vs predicted
+predicted <- predict(multiple_model)
+
+plot(
+  data$Marks,
+  predicted,
+  main = "Multiple Regression: Actual vs Predicted",
+  xlab = "Actual Marks",
+  ylab = "Predicted Marks",
+  pch = 19
+)
+
+abline(a = 0, b = 1)
